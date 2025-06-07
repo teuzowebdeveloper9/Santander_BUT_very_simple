@@ -1,9 +1,6 @@
 package santander.simple.entitys;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import santander.simple.Enums.TypeAcount;
 
 import java.math.BigDecimal;
@@ -12,9 +9,6 @@ import java.util.UUID;
 
 @Entity(name = "transactions")
 @Table(name = "TB_transactions")
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id")
 public class Transactions {
 
     @Id
@@ -23,10 +17,49 @@ public class Transactions {
     private BigDecimal amount;
     @ManyToOne
     @JoinColumn(name = "sender_id")
-    private TypeAcount sender;
+    private User sender;
     @ManyToOne
     @JoinColumn(name = "receiver_id")
-    private TypeAcount receiver;
+    private User receiver;
     private LocalDateTime dataTransaction;
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
+
+    public User getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
+    }
+
+    public LocalDateTime getDataTransaction() {
+        return dataTransaction;
+    }
+
+    public void setDataTransaction(LocalDateTime dataTransaction) {
+        this.dataTransaction = dataTransaction;
+    }
 }
