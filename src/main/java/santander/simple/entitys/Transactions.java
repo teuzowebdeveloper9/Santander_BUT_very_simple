@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-public class Tansactions {
+public class Transactions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

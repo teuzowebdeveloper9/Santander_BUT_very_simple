@@ -21,10 +21,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String FirstName;
-    private String LastName;
+    private String firstName;
+    private String lastName;
     @Column(unique = true)
-    private String CPF;
+    private String document;
     @Column(unique = true)
     private  String email;
     private String password;
