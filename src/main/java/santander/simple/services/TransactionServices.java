@@ -3,6 +3,7 @@ package santander.simple.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import santander.simple.DTOs.TransactionDTO;
 import santander.simple.Repositories.TransactionRepository;
@@ -15,43 +16,44 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 
+@Service
 public class TransactionServices {
 
-     @Autowired
-     private User user;
 
-     @Autowired
-     private UserRepositorie userRepository;
+    @Autowired
+    private UserRepositorie userRepository;
 
-     @Autowired
-     UserServices userServices;
+    @Autowired
+    private UserServices userServices;
 
-     @Autowired
-    TransactionRepository transactionRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
-     @Autowired
-     Transactions transactions;
+    @Autowired
+    private RestTemplate restTemplate;
 
-     @Autowired
-    RestTemplate restTemplate;
 
-    public void VerifySenderAndReceiver(UUID senderId, UUID receiverId, BigDecimal amount ) throws Exception {
+
+    public void verifySenderAndReceiver(UUID senderId, UUID receiverId, BigDecimal amount) throws Exception {
         User sender = userRepository.findById(senderId)
                 .orElseThrow(() -> new Exception("Sender not found"));
 
         User receiver = userRepository.findById(receiverId)
                 .orElseThrow(() -> new Exception("Receiver not found"));
 
-
-
-        if (!this.autorizeTransaction(sender, transactions.getAmount())){
-            throw  new Exception("authorization denied");
+        if (!this.autorizeTransaction(sender, amount)) {  // Usamos o amount passado como parâmetro
+            throw new Exception("Authorization denied");
         }
-
     }
-    public void CreateTransaction(TransactionDTO transactionDTO) {
-        User sender = transactionDTO.sender();
-        User receiver = transactionDTO.receiver();
+
+    public void createTransaction(TransactionDTO transactionDTO) {
+
+        User sender = userRepository.findById(transactionDTO.sender().getId())
+                .orElseThrow(() -> new RuntimeException("Sender not found"));
+
+        User receiver = userRepository.findById(transactionDTO.receiver().getId())
+                .orElseThrow(() -> new RuntimeException("Receiver not found"));
+
         BigDecimal amount = transactionDTO.amount();
 
 
@@ -71,8 +73,6 @@ public class TransactionServices {
         transactionRepository.save(newTransaction);
     }
 
-
-
     public boolean autorizeTransaction(User sender, BigDecimal value) {
         ResponseEntity<Map> response = restTemplate.getForEntity(
                 "https://util.devi.tools/api/v2/authorize", Map.class);
@@ -80,6 +80,4 @@ public class TransactionServices {
         return response.getStatusCode() == HttpStatus.OK &&
                 "success".equals(response.getBody().get("status"));
     }
-
-
 }

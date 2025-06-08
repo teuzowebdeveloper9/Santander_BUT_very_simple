@@ -1,4 +1,5 @@
 package santander.simple.DTOs;
 
-public class notificationDTO {
+public record NotificationDTO(String email, String message) {
+
 }

@@ -1,4 +1,9 @@
 package santander.simple.DTOs;
 
-public record UserDTO() {
+import santander.simple.Enums.TypeAcount;
+
+import java.math.BigDecimal;
+
+public record UserDTO(String firstName, String lastName, BigDecimal balance,
+                      String document, String email, String password, TypeAcount typeAcount) {
 }

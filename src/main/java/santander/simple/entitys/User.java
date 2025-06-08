@@ -2,6 +2,9 @@ package santander.simple.entitys;
 
 
 import jakarta.persistence.*;
+
+
+import santander.simple.DTOs.UserDTO;
 import santander.simple.Enums.TypeAcount;
 
 import java.math.BigDecimal;
@@ -24,6 +27,34 @@ public class User {
     private String password;
     @Enumerated(EnumType.STRING)
     private TypeAcount typeAcount;
+
+    public User() {
+    }
+
+
+    public User(UUID id, String firstName, String lastName, BigDecimal balance,
+                String document, String email, String password, TypeAcount typeAcount) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.balance = balance;
+        this.document = document;
+        this.email = email;
+        this.password = password;
+        this.typeAcount = typeAcount;
+    }
+
+
+    public User(UserDTO data){
+
+        this.firstName = data.firstName();
+        this.lastName = data.lastName();
+        this.balance = data.balance();
+        this.typeAcount = data.typeAcount();
+        this.password = data.password();
+        this.document = data.email();
+
+    }
 
     public BigDecimal getBalance() {
         return balance;
