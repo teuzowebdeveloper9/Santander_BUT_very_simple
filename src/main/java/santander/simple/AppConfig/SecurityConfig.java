@@ -1,3 +1,5 @@
+package santander.simple.AppConfig;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,9 +11,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Desabilita CSRF (necessário para APIs REST)
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // PERMITE TODAS AS REQUISIÇÕES SEM AUTENTICAÇÃO
+                        .anyRequest().permitAll()
                 );
 
         return http.build();

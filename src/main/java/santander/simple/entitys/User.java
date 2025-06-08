@@ -11,7 +11,7 @@ import santander.simple.Enums.TypeAcount;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Entity(name = "users")
+@Entity(name = "User")
 @Table(name = "TB_users")
 public class User {
 

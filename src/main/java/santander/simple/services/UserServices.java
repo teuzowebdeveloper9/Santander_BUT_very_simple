@@ -2,6 +2,7 @@ package santander.simple.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import santander.simple.DTOs.AuthDTO;
 import santander.simple.DTOs.UserDTO;
 import santander.simple.Enums.TypeAcount;
 import santander.simple.Repositories.UserRepositorie;
@@ -50,8 +51,15 @@ public class UserServices {
     public List<User> getAllUsers(){
         return this.userRepositorie.findAll();
     }
-
-    public User findByDocument(String document) throws Exception {
-       return this.userRepositorie.findUserByDocument(document).orElseThrow(() -> new  Exception("USER NOT FOUND"));
+    public User authenticate(AuthDTO authDTO) throws Exception {
+        return userRepositorie.findForAuth(
+                authDTO.firstName(),
+                authDTO.lastName(),
+                authDTO.email(),
+                authDTO.document()
+        ).orElseThrow(() -> new Exception("USER NOT FOUND"));
     }
+
+
+
 }

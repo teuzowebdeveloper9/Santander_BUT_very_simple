@@ -13,6 +13,7 @@ import santander.simple.entitys.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -85,5 +86,9 @@ public class TransactionServices {
 
         return response.getStatusCode() == HttpStatus.OK &&
                 "success".equals(response.getBody().get("status"));
+    }
+
+    public List<Transactions> getAllTransaction(){
+        return transactionRepository.findAll();
     }
 }
