@@ -53,7 +53,8 @@ public class User {
         this.balance = data.balance();
         this.typeAcount = data.typeAcount();
         this.password = data.password();
-        this.document = data.email();
+        this.email = data.email();
+        this.document = data.document();
 
     }
 
