@@ -32,6 +32,9 @@ public class TransactionServices {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    AlertService alertService;
+
 
 
     public void verifySenderAndReceiver(UUID senderId, UUID receiverId, BigDecimal amount) throws Exception {
@@ -46,31 +49,34 @@ public class TransactionServices {
         }
     }
 
-    public void createTransaction(TransactionDTO transactionDTO) {
+    public Transactions createTransaction(TransactionDTO transactionDTO) throws Exception {
 
-        User sender = userRepository.findById(transactionDTO.sender().getId())
-                .orElseThrow(() -> new RuntimeException("Sender not found"));
+        User senderUser = userRepository.findById(transactionDTO.sender())
+                .orElseThrow(() -> new Exception("Sender not found"));
 
-        User receiver = userRepository.findById(transactionDTO.receiver().getId())
-                .orElseThrow(() -> new RuntimeException("Receiver not found"));
+        User receiverUser = userRepository.findById(transactionDTO.receiver())
+                .orElseThrow(() -> new Exception("Receiver not found"));
 
         BigDecimal amount = transactionDTO.amount();
 
 
-        sender.setBalance(sender.getBalance().subtract(amount));
-        receiver.setBalance(receiver.getBalance().add(amount));
+        senderUser.setBalance(senderUser.getBalance().subtract(amount));
+        receiverUser.setBalance(receiverUser.getBalance().add(amount));
 
 
         Transactions newTransaction = new Transactions();
         newTransaction.setAmount(amount);
-        newTransaction.setSender(sender);
-        newTransaction.setReceiver(receiver);
+        newTransaction.setSender(senderUser);
+        newTransaction.setReceiver(receiverUser);
         newTransaction.setDataTransaction(LocalDateTime.now());
 
 
-        userRepository.save(sender);
-        userRepository.save(receiver);
+        userRepository.save(senderUser);
+        userRepository.save(receiverUser);
         transactionRepository.save(newTransaction);
+
+
+        return newTransaction;
     }
 
     public boolean autorizeTransaction(User sender, BigDecimal value) {

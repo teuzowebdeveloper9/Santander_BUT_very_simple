@@ -1,6 +1,7 @@
 package santander.simple.entitys;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 

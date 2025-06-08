@@ -7,5 +7,5 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 
-public record TransactionDTO(BigDecimal amount, User sender, User receiver) {
-}
+public record TransactionDTO(BigDecimal amount, UUID sender, UUID receiver) { }
+

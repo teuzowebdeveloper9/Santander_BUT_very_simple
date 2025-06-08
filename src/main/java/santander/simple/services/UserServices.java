@@ -51,4 +51,7 @@ public class UserServices {
         return this.userRepositorie.findAll();
     }
 
+    public User findByDocument(String document) throws Exception {
+       return this.userRepositorie.findUserByDocument(document).orElseThrow(() -> new  Exception("USER NOT FOUND"));
+    }
 }
