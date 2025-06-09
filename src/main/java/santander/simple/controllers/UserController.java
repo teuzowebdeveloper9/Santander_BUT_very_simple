@@ -10,6 +10,7 @@ import santander.simple.services.UserServices;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {

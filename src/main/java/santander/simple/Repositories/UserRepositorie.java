@@ -12,11 +12,16 @@ public interface UserRepositorie extends JpaRepository<User, UUID> {
 
     Optional<User> findUserById(UUID id);
 
-    @Query("SELECT u FROM User u" +
-            " WHERE u.firstName = :firstName AND u.lastName = " +
-            ":lastName AND (u.email = :email OR u.document = :document)")
+    @Query("SELECT u FROM User u " +
+            "WHERE u.firstName = :firstName " +
+            "AND u.lastName = :lastName " +
+            "AND u.email = :email " +
+            "AND u.document = :document " +
+            "AND u.password = :password")
     Optional<User> findForAuth(@Param("firstName") String firstName,
                                @Param("lastName") String lastName,
                                @Param("email") String email,
-                               @Param("document") String document);
+                               @Param("document") String document,
+                               @Param("password") String password);
+
 }

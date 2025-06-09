@@ -56,7 +56,8 @@ public class UserServices {
                 authDTO.firstName(),
                 authDTO.lastName(),
                 authDTO.email(),
-                authDTO.document()
+                authDTO.document(),
+                authDTO.password()
         ).orElseThrow(() -> new Exception("USER NOT FOUND"));
     }
 

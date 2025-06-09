@@ -8,6 +8,10 @@ public record AuthDTO(
         String firstName,
         @NotBlank
         String lastName,
+        @NotBlank
         String document,
-        String email) {
+        @NotBlank
+        String email,
+        @NotBlank
+        String password) {
 }

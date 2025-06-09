@@ -10,6 +10,7 @@ import santander.simple.services.UserServices;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     @Autowired
@@ -19,7 +20,7 @@ public class AuthController {
     public ResponseEntity<?> authUser(@RequestBody AuthDTO authDTO) {
         try {
             User user = userServices.authenticate(authDTO);
-            return ResponseEntity.ok(user); // 200 OK
+            return ResponseEntity.ok(user);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Authentication failed"); // 403
         }
