@@ -60,7 +60,7 @@ Este backend é composto por **três APIs** construídas com Spring Boot, seguin
 ## 📦 Banco de Dados
 
 - PostgreSQL
-- Tabelas separadas para `users`, `transactions`, `credentials`
+- Tabelas separadas para `users`, `transactions`
 - Mapeamento com JPA e validação
 
 ## 🧪 Como rodar localmente
